@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import './App.less'
 
 
 export default function App() {
@@ -11,8 +12,7 @@ export default function App() {
     async function fetchNotes(){
         const res = await fetch('http://localhost:3001/');
         const data = await res.json()
-        setNotes(data)
-        console.log(data);
+        setNotes(data)  
     }
     useEffect(()=>{
         fetchNotes()
@@ -28,8 +28,7 @@ export default function App() {
             date:new Date().toLocaleDateString()
         }
         const data = await Axios.post('http://localhost:3001/notes',newNote)
-        console.log(data);
-        
+        console.log(data);       
     }
     function onChangeInput({target}){
         const name = target.name;
@@ -67,7 +66,7 @@ export default function App() {
             </ul>
             <hr/>
             <form onSubmit={subForm}>
-                <input type="text" name='title' value={Title} onChange={onChangeInput} />
+                <input className='input' type="text" name='title' value={Title} onChange={onChangeInput} />
                 <input type="text" name='text' value={Text} onChange={onChangeInput} />
                 <input type="text" name='color' value={Color} onChange={onChangeInput}/>
                 <button type="submit">Sub</button>
