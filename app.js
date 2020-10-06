@@ -1,12 +1,15 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const path = require("path");
+const cors  = require('cors')
 const config = require("./config");
 const bodyParser = require('body-parser')
 const Db = require('./utils/database')
 
 const app = express();
 
+
+app.use(cors({ origin: '*' }));
 
 app.use(bodyParser.json())
 
