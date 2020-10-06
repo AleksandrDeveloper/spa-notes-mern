@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 
@@ -17,12 +18,35 @@ export default function App() {
         fetchNotes()
     },[])
 
-    function subForm(){
-
+    async function subForm(event){
+        
+        event.preventDefault()
+        const newNote = {
+            title:Title,
+            text:Text,
+            color:Color,
+            date:new Date().toLocaleDateString()
+        }
+        const data = await Axios.post('http://localhost:3001/notes',newNote)
+        console.log(data);
+        
     }
     function onChangeInput({target}){
         const name = target.name;
-        console.log(name);
+        const value = target.value
+        switch (name) {
+            case 'title':
+                setTitle(value)
+                break
+            case 'text':
+                setText(value)
+                break
+            case 'color':
+                setColor(value)
+                break
+            default:
+                break
+        }
     }
 
     return(
@@ -31,13 +55,18 @@ export default function App() {
                 {
                     Notes.map((note,index)=>{
                         return(
-                            <li key={index}>{note.title} </li>
+                            <li 
+                            style={{color:note.color}} 
+                            key={index}>{note.title} 
+                            <span> {note.text} </span> 
+                            <strong>{note.date} </strong>
+                            </li>
                         )
                     })
                 }
             </ul>
             <hr/>
-            <form action="/notes" method="post" onSubmit={subForm}>
+            <form onSubmit={subForm}>
                 <input type="text" name='title' value={Title} onChange={onChangeInput} />
                 <input type="text" name='text' value={Text} onChange={onChangeInput} />
                 <input type="text" name='color' value={Color} onChange={onChangeInput}/>

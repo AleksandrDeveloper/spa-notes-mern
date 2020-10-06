@@ -19,13 +19,14 @@ app.get("/", async (req, res) => {
 });
 
 app.post('/notes',async (req,res)=>{
-  console.log(req.body);
+  console.log(req);
+  const {title,text,color,date} = req.body
 
   const data = await Db.createNewNotes({
-    title:`Hello world ${(Math.random()*1000).toFixed()}`,
-    text:'Lorem ?',
-    date:new Date().toLocaleDateString(),
-    color:'blue'
+    title,
+    text,
+    date,
+    color,
   })
   res.send(data);
 })
